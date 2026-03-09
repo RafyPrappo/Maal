@@ -1,0 +1,11 @@
+# This ignores the node_modules folder (where all our packages go)
+node_modules/
+
+# This ignores our environment variables file (secret keys)
+.env
+
+# This ignores macOS system files
+.DS_Store
+
+# This ignores log files
+*.log
