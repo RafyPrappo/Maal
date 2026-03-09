@@ -1,25 +1,30 @@
-// LINE 1: Import express - this brings in the express library
 const express = require('express');
-
-// LINE 2: Create our app - this creates our web server
-const app = express();
-
-// LINE 3: Import dotenv - this reads our .env file
+const cors = require('cors');
 require('dotenv').config();
 
-// LINE 4: Define port - use from .env or default to 5000
-const PORT = process.env.PORT || 5000; //direct Port = 5000 dileo somossa cilona
+const app = express();
 
-// LINE 5: Create a test route - when someone visits /test
+// Middleware
+app.use(cors());
+app.use(express.json());
+app.use(express.urlencoded({ extended: true }));
+
+// Logging middleware
+app.use((req, res, next) => {
+  console.log(`${new Date().toISOString()} - ${req.method} ${req.path}`);
+  next();
+});
+
+const PORT = process.env.PORT || 5000;
+
+// Test route
 app.get('/test', (req, res) => {
-  // Send back a JSON response
   res.json({ 
-    message: 'MAAL server is running!',
+    message: 'MAAL server is running with middleware!',
     timestamp: new Date().toISOString()
   });
 });
 
-// LINE 6: Start the server
 app.listen(PORT, () => {
   console.log(`🚀 MAAL server running on http://localhost:${PORT}`);
   console.log(`📝 Test the API: http://localhost:${PORT}/test`);
